@@ -1,0 +1,67 @@
+name: Actualizar RSS de Roche
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    # GitHub comprueba cada hora de lunes a sábado.
+    # Después se aplica el horario exacto de España.
+    - cron: "17 * * * 1-6"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar-rss-roche-investors
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Comprobar horario de España
+        id: horario
+        shell: bash
+        run: |
+          HORA=$(TZ=Europe/Madrid date +%H)
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "ejecutar=true" >> "$GITHUB_OUTPUT"
+          elif [ "$HORA" -ge 7 ] && [ "$HORA" -le 22 ]; then
+            echo "ejecutar=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ejecutar=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Descargar repositorio
+        if: steps.horario.outputs.ejecutar == 'true'
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        if: steps.horario.outputs.ejecutar == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias
+        if: steps.horario.outputs.ejecutar == 'true'
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
+
+      - name: Crear RSS
+        if: steps.horario.outputs.ejecutar == 'true'
+        run: python generate_feed.py
+
+      - name: Guardar RSS
+        if: steps.horario.outputs.ejecutar == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/feed.xml
+          git diff --cached --quiet || git commit -m "Actualizar RSS de Roche"
+          git push
