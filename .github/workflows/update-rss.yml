@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
 
   schedule:
-    # GitHub comprueba cada hora de lunes a sábado.
-    # Después se aplica el horario exacto de España.
+    # Cada hora, de lunes a sábado.
     - cron: "17 * * * 1-6"
 
 permissions:
@@ -44,13 +43,12 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: pip
 
       - name: Instalar dependencias
         if: steps.horario.outputs.ejecutar == 'true'
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt
+          python -m pip install playwright==1.55.0
           python -m playwright install --with-deps chromium
 
       - name: Crear RSS
