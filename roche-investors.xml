@@ -5,7 +5,7 @@
     <link>https://www.roche.com/investors/updates</link>
     <description>Actualizaciones y noticias para inversores de Roche</description>
     <language>en</language>
-    <lastBuildDate>Thu, 10 Sep 2026 11:30:53 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 10 Sep 2026 12:38:23 +0000</lastBuildDate>
     <atom:link href="roche-investors.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>U.S. FDA grants Priority Review for Roche’s Enspryng for MOGAD, an autoimmune disease with no approved treatments</title>
@@ -27,6 +27,13 @@
       <guid isPermaLink="true">https://www.roche.com/investors/updates/inv-update-2026-08-24</guid>
       <description>Actualización para inversores publicada por Roche.</description>
       <pubDate>Mon, 24 Aug 2026 08:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Invitation to Roche Pharma Day 2026</title>
+      <link>https://www.roche.com/investors/updates/inv-update-2026-08-13</link>
+      <guid isPermaLink="true">https://www.roche.com/investors/updates/inv-update-2026-08-13</guid>
+      <description>Actualización para inversores publicada por Roche.</description>
+      <pubDate>Thu, 13 Aug 2026 08:00:00 +0000</pubDate>
     </item>
     <item>
       <title>Nurix Therapeutics Announces First Patient Enrolled in Registrational Phase 3 DAYBreak CLL-306 Trial of Bexobrutideg in Relapsed/Refractory Chronic Lymphocytic Leukemia/Small Lymphocytic Lymphoma</title>
